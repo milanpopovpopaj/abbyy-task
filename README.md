@@ -81,9 +81,6 @@ Develop a simple web application on ASP.Net Core that includes basic elements su
 	- Open PowerShell Command Prompt and navigate to the root of the app (where the Abbyy-task.sln file is)
 	- Install the dotnet-ef command-line tool globally:
 		- **dotnet tool install --global dotnet-ef**
-	- Add migrations with:
-		- **dotnet ef migrations add "Initial" -o "Data/Migrations"**
-		- **dotnet ef migrations add "Identity" -o "Data/Migrations"**
 	- Execute migrations:
 		- **dotnet ef database update**
 	- Open the following URLs to import products and create default users in the database:
