@@ -1,0 +1,62 @@
+<h1>Products</h1>
+
+<p>Here's a list of our products:</p>
+
+<p *ngIf="!products"><em>Loading...</em></p>
+
+<div class="commands text-right" *ngIf="products">
+  <button type="submit"
+          [routerLink]="['/product']"
+          class="btn btn-success">
+    Add a new Product
+  </button>
+</div>
+
+<mat-form-field [hidden]="!products">
+  <input matInput (keyup)="loadData($event.target.value)"
+         placeholder="Filter by name (or part of it)...">
+</mat-form-field>
+
+<table mat-table [dataSource]="products"
+       class="table-striped mat-elevation-z8"
+       [hidden]="!products"
+       matSort (matSortChange)="loadData()"
+      matSortActive="{{defaultSortColumn}}"
+      matSortDirection="{{defaultSortOrder}}">
+
+  <!-- Id Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <td mat-cell *matCellDef="let product">{{product.id}}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let product">
+      <a [routerLink]="['/product', product.id]">{{product.name}}</a>
+    </td>
+  </ng-container>
+
+  <!-- Price Column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+    <td mat-cell *matCellDef="let product">{{product.price}}</td>
+  </ng-container>
+
+  <!-- Description Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+    <td mat-cell *matCellDef="let product">{{product.description}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!-- Pagination directive -->
+<mat-paginator [hidden]="!products"
+               (page)="getData($event)"
+               [pageSize]="10"
+               [pageSizeOptions]="[10, 20, 50]"
+               showFirstLastButtons></mat-paginator>
